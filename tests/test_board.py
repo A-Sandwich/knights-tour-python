@@ -1,4 +1,5 @@
 import unittest
+import copy
 from tour.board import Board
 
 class Test_TestBoard(unittest.TestCase):
@@ -25,6 +26,32 @@ class Test_TestBoard(unittest.TestCase):
         result = board.get_down_moves()
         self.assertTrue((2, 5) in result)
         self.assertTrue((4, 5) in result)
-
+    
+    def test_is_move_valid(self):
+        board = Board(3, 3)
+        self.assertTrue(board.is_move_valid((0, 0)))
+        self.assertTrue(board.is_move_valid((7, 7)))
+        self.assertTrue(board.is_move_valid((0, 7)))
+        self.assertTrue(board.is_move_valid((7, 0)))
+        self.assertFalse(board.is_move_valid((-1, 0)))
+        self.assertFalse(board.is_move_valid((0, -1)))
+        self.assertFalse(board.is_move_valid((8, 8)))
+        self.assertFalse(board.is_move_valid((0, 8)))
+        self.assertFalse(board.is_move_valid((8, 0)))
+        
+    def test_remove_invalid_moves(self):
+        board = Board(0, 0)
+        all_moves = copy.deepcopy(board.moves)
+        invalid_moves = []
+        for move in all_moves:
+            if move[0] < 0 or move[0] >= board.board_size[0] or move[1] < 0 or move[1] > board.board_size[1]:
+                invalid_moves.append(move)
+        board.remove_invalid_moves()
+        self.assertNotEqual(all_moves, board.moves)
+        self.assertTrue(len(all_moves) != len(board.moves))
+        for invalid_move in invalid_moves:
+            self.assertFalse(invalid_move in board.moves)
+        
 if __name__ == '__main__':
+
     unittest.main()
