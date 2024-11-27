@@ -23,7 +23,7 @@ class Manager:
             next_board = Board().seed_board(furthest_board, next_move)
             self.boards.append(next_board)
             self.iteration += 1
-            if self.iteration % 1000000 == 0:
+            if self.iteration % 500000 == 0:
                 self.print_state()
         print("Final board:")
         self.print_state()
@@ -40,14 +40,14 @@ class Manager:
         print("\n\n")
 
     def is_tour_complete(self):
+        results = []
         with ThreadPoolExecutor(max_workers=14) as executor:
             futures = [executor.submit(is_board_complete, board) for board in self.boards]
-            results = []
             for future in as_completed(futures):
                 results.append(future.result())
-            for result in results:
-                if result:
-                    return True
+        for result in results:
+            if result:
+                return True
 
 def is_board_complete(board):
     return board.is_tour_complete()
