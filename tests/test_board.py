@@ -4,31 +4,31 @@ from tour.board import Board
 
 class Test_TestBoard(unittest.TestCase):
     def test_get_right_moves_center(self):
-        board = Board(3, 3)
+        board = Board().seed_board_with_starting_position(3, 3)
         result = board.get_right_moves()
         self.assertTrue((5, 2) in result)
         self.assertTrue((5, 4) in result)
 
     def test_get_left_moves_center(self):
-        board = Board(3, 3)
+        board = Board().seed_board_with_starting_position(3, 3)
         result = board.get_left_moves()
         self.assertTrue((1, 2) in result)
         self.assertTrue((1, 4) in result)
 
     def test_get_up_moves_center(self):
-        board = Board(3, 3)
+        board = Board().seed_board_with_starting_position(3, 3)
         result = board.get_up_moves()
         self.assertTrue((2, 1) in result)
         self.assertTrue((4, 1) in result)
 
     def test_get_down_moves_center(self):
-        board = Board(3, 3)
+        board = Board().seed_board_with_starting_position(3, 3)
         result = board.get_down_moves()
         self.assertTrue((2, 5) in result)
         self.assertTrue((4, 5) in result)
     
     def test_is_move_valid(self):
-        board = Board(3, 3)
+        board = Board().seed_board_with_starting_position(3, 3)
         self.assertTrue(board.is_move_valid((0, 0)))
         self.assertTrue(board.is_move_valid((7, 7)))
         self.assertTrue(board.is_move_valid((0, 7)))
@@ -40,7 +40,7 @@ class Test_TestBoard(unittest.TestCase):
         self.assertFalse(board.is_move_valid((8, 0)))
         
     def test_remove_invalid_moves(self):
-        board = Board(0, 0)
+        board = Board().seed_board_with_starting_position(0, 0)
         all_moves = copy.deepcopy(board.moves)
         invalid_moves = []
         for move in all_moves:

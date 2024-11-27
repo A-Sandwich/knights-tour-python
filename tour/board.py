@@ -1,13 +1,28 @@
 import numpy as np
+import copy
 
 class Board:
-    def __init__(self, starting_x, starting_y):
+    def __init__(self):
+        pass
+    
+
+    def seed_board_with_starting_position(self, starting_x, starting_y):
         self.board_size = (8, 8)
         self.cells = np.zeros((8, 8), dtype=int)
         self.cells[starting_x][starting_y] = 1
         self.last_move_number = 1
         self.last_move = (starting_x, starting_y)
         self.moves = [*self.get_right_moves(), *self.get_left_moves(), *self.get_down_moves(), *self.get_up_moves()]
+        return self
+
+    def seed_board(self, board, move):
+        self.board_size = board.board_size
+        self.cells = copy.deepcopy(board.cells)
+        self.cells[move[0]][move[1]] = board.last_move_number + 1
+        self.last_move_number = board.last_move_number + 1
+        self.last_move = move
+        self.moves = [*self.get_right_moves(), *self.get_left_moves(), *self.get_down_moves(), *self.get_up_moves()]
+        return self
 
     # My intent is that we just remove taken paths and once we are out of moves we know this path is not valid
     def get_next_move(self):
@@ -61,3 +76,11 @@ class Board:
                 if cell == 0:
                     return False
         return True
+    
+    def __str__(self):
+        printed_board = ""
+        for column in self.cells:
+            for cell in column:
+                printed_board += f"{cell:02d}|"
+            printed_board += "\n"
+        return printed_board
