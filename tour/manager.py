@@ -40,6 +40,12 @@ class Manager:
         print("\n\n")
 
     def is_tour_complete(self):
+        for board in self.boards:
+            if board.is_tour_complete():
+                return True
+        return False
+    
+    ### def is_tour_complete(self):
         results = []
         with ThreadPoolExecutor(max_workers=14) as executor:
             futures = [executor.submit(is_board_complete, board) for board in self.boards]
@@ -48,7 +54,7 @@ class Manager:
         for result in results:
             if result:
                 return True
-
+    ###
 def is_board_complete(board):
     return board.is_tour_complete()
 
