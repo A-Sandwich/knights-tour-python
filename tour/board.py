@@ -36,7 +36,8 @@ class Board:
             if len(moves) < number_of_possible_moves:
                 number_of_possible_moves = len(moves)
                 selected_move = move
-        self.moves.remove(selected_move)
+        if selected_move != (-1, -1):
+            self.moves.remove(selected_move)
         return selected_move
         
 
