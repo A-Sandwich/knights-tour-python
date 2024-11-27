@@ -32,16 +32,17 @@ class Manager:
 
     def print_state(self):
         print(self.boards[-1])
-        print("Iteration: ", self.iteration)
-        print("Boards: ", len(self.boards))
-        print("Failed paths: ", self.failed_paths)
-        print("Furthest move: ", self.furthest_move)
-        print("Time elapsed: ", time() - self.start_time)
+        print("🎠Iteration: ", self.iteration)
+        print("🏁Boards: ", len(self.boards))
+        print("🗺️Failed paths: ", self.failed_paths)
+        print("♟️Furthest move: ", self.furthest_move)
+        print("⏳Time elapsed in seconds: ", time() - self.start_time)
         print("\n\n")
 
     def is_tour_complete(self):
         for board in self.boards:
             if board.is_tour_complete():
+                print("IS COMPLETED 🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨")
                 return True
         return False
     
