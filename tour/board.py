@@ -12,7 +12,7 @@ class Board:
         self.cells[starting_x][starting_y] = 1
         self.last_move_number = 1
         self.last_move = (starting_x, starting_y)
-        self.moves = [*self.get_right_moves(), *self.get_left_moves(), *self.get_down_moves(), *self.get_up_moves()]
+        self.moves = [*self.get_right_moves(self.last_move), *self.get_left_moves(self.last_move), *self.get_down_moves(self.last_move), *self.get_up_moves(self.last_move)]
         return self
 
     def seed_board(self, board, move):
@@ -21,15 +21,24 @@ class Board:
         self.cells[move[0]][move[1]] = board.last_move_number + 1
         self.last_move_number = board.last_move_number + 1
         self.last_move = move
-        self.moves = [*self.get_right_moves(), *self.get_left_moves(), *self.get_down_moves(), *self.get_up_moves()]
+        self.moves = [*self.get_right_moves(self.last_move), *self.get_left_moves(self.last_move), *self.get_down_moves(self.last_move), *self.get_up_moves(self.last_move)]
         return self
 
     # My intent is that we just remove taken paths and once we are out of moves we know this path is not valid
     def get_next_move(self):
         self.remove_invalid_moves()
-        if len(self.moves) > 0:
-            return self.moves.pop(0)
-        return (-1, -1)
+        
+        number_of_possible_moves = 99999
+        selected_move = (-1, -1)
+        for move in self.moves:
+            moves = [*self.get_right_moves(move), *self.get_left_moves(move), *self.get_down_moves(move), *self.get_up_moves(move)]
+            
+            if len(moves) < number_of_possible_moves:
+                number_of_possible_moves = len(moves)
+                selected_move = move
+        self.moves.remove(selected_move)
+        return selected_move
+        
 
     def remove_invalid_moves(self):
         invalid_moves = []
@@ -40,17 +49,17 @@ class Board:
         for invalid_move in invalid_moves:
             self.moves.remove(invalid_move)
 
-    def get_right_moves(self):
-        return ((self.last_move[0] + 2, self.last_move[1] + 1),  (self.last_move[0] + 2, self.last_move[1] - 1))
+    def get_right_moves(self, move):
+        return ((move[0] + 2, move[1] + 1),  (move[0] + 2, move[1] - 1))
     
-    def get_left_moves(self):
-        return ((self.last_move[0] - 2, self.last_move[1] - 1), (self.last_move[0] - 2, self.last_move[1] + 1))
+    def get_left_moves(self, move):
+        return ((move[0] - 2, move[1] - 1), (move[0] - 2, move[1] + 1))
     
-    def get_down_moves(self):
-        return ((self.last_move[0] + 1, self.last_move[1] + 2), (self.last_move[0] - 1, self.last_move[1] + 2))
+    def get_down_moves(self, move):
+        return ((move[0] + 1, move[1] + 2), (move[0] - 1, move[1] + 2))
     
-    def get_up_moves(self):
-        return ((self.last_move[0] - 1, self.last_move[1] - 2), (self.last_move[0] + 1, self.last_move[1] - 2))
+    def get_up_moves(self, move):
+        return ((move[0] - 1, move[1] - 2), (move[0] + 1, move[1] - 2))
 
     def is_move_valid(self, move):
         move_is_on_board = self.is_x_valid(move[0]) and self.is_y_valid(move[1]) and self.cells[move[0]][move[1]] == 0

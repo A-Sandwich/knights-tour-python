@@ -5,25 +5,25 @@ from tour.board import Board
 class Test_TestBoard(unittest.TestCase):
     def test_get_right_moves_center(self):
         board = Board().seed_board_with_starting_position(3, 3)
-        result = board.get_right_moves()
+        result = board.get_right_moves(board.last_move)
         self.assertTrue((5, 2) in result)
         self.assertTrue((5, 4) in result)
 
     def test_get_left_moves_center(self):
         board = Board().seed_board_with_starting_position(3, 3)
-        result = board.get_left_moves()
+        result = board.get_left_moves(board.last_move)
         self.assertTrue((1, 2) in result)
         self.assertTrue((1, 4) in result)
 
     def test_get_up_moves_center(self):
         board = Board().seed_board_with_starting_position(3, 3)
-        result = board.get_up_moves()
+        result = board.get_up_moves(board.last_move)
         self.assertTrue((2, 1) in result)
         self.assertTrue((4, 1) in result)
 
     def test_get_down_moves_center(self):
         board = Board().seed_board_with_starting_position(3, 3)
-        result = board.get_down_moves()
+        result = board.get_down_moves(board.last_move)
         self.assertTrue((2, 5) in result)
         self.assertTrue((4, 5) in result)
     
