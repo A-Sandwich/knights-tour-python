@@ -36,8 +36,14 @@ class Manager:
         print("🏁Boards: ", len(self.boards))
         print("🗺️Failed paths: ", self.failed_paths)
         print("♟️Furthest move: ", self.furthest_move)
-        print("⏳Time elapsed in seconds: ", time() - self.start_time)
+        print(f"⏳Time elapsed: {self.get_elapsed_time()}")
         print("\n\n")
+    
+    def get_elapsed_time(self):
+        #((time() - self.start_time) / 60.0):.3f
+        minutes = int((time() - self.start_time) / 60)
+        seconds = ((time() - self.start_time) % 60)
+        return f"{minutes} minutes and {seconds:.3f} seconds"
 
     def is_tour_complete(self):
         for board in self.boards:
