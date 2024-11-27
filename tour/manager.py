@@ -37,9 +37,10 @@ class Manager:
         print("Failed paths: ", self.failed_paths)
         print("Furthest move: ", self.furthest_move)
         print("Time elapsed: ", time() - self.start_time)
+        print("\n\n")
 
     def is_tour_complete(self):
-        with ThreadPoolExecutor(max_workers=6) as executor:
+        with ThreadPoolExecutor(max_workers=14) as executor:
             futures = [executor.submit(is_board_complete, board) for board in self.boards]
             results = []
             for future in as_completed(futures):
