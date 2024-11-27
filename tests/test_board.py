@@ -53,5 +53,4 @@ class Test_TestBoard(unittest.TestCase):
             self.assertFalse(invalid_move in board.moves)
         
 if __name__ == '__main__':
-
     unittest.main()
