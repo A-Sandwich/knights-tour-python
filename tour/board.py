@@ -7,8 +7,8 @@ class Board:
     
 
     def seed_board_with_starting_position(self, starting_x, starting_y):
-        self.board_size = (8, 8)
-        self.cells = np.zeros((8, 8), dtype=int)
+        self.board_size = (7, 7)
+        self.cells = np.zeros((7, 7), dtype=int)
         self.cells[starting_x][starting_y] = 1
         self.last_move_number = 1
         self.last_move = (starting_x, starting_y)
@@ -85,7 +85,9 @@ class Board:
             for cell in column:
                 if cell == 0:
                     return False
+        print("Tour is complete! ✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅")
         return True
+    
     
     def __str__(self):
         printed_board = ""

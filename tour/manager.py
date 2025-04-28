@@ -1,14 +1,21 @@
 from tour.board import Board
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from time import time
+from tour.pickler import Pickler
 
 class Manager:
     def __init__(self):
-        self.boards = [Board().seed_board_with_starting_position(3, 3)]
+        print("init 🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕")
+        self.boards = [Board().seed_board_with_starting_position(0, 0)]
         self.iteration = 0
         self.failed_paths = 0
         self.start_time = time()
         self.furthest_move = 0
+
+    def save(self):
+        pickler = Pickler("tour.pickle")
+        pickler.save(self)
+        print("pickled 🥒🥒🥒🥒")
     
     def depth_first_tour(self):
         while len(self.boards) > 0 and not self.is_tour_complete():
@@ -23,20 +30,29 @@ class Manager:
             next_board = Board().seed_board(furthest_board, next_move)
             self.boards.append(next_board)
             self.iteration += 1
-            if self.iteration % 500000 == 0:
+            if self.iteration % 1250000 == 0:
+                self.save()
                 self.print_state()
+
+            #self.print_state()
         print("Final board:")
         self.print_state()
         print("DONE 🤪🤪🤪🤪🤪")
 
 
     def print_state(self):
+        if (self.furthest_move >= 15):
+            print("Furthest")
+        print("Print state 🖨️🖨️🖨️🖨️🖨️🖨️")
+        if (len(self.boards) <= 0):
+            print("No boards left ⛓️‍💥⛓️‍💥⛓️‍💥⛓️‍💥")
+            return
         print(self.boards[-1])
-        print("🎠Iteration: ", self.iteration)
-        print("🏁Boards: ", len(self.boards))
-        print("🗺️Failed paths: ", self.failed_paths)
-        print("♟️Furthest move: ", self.furthest_move)
-        print(f"⏳Time elapsed: {self.get_elapsed_time()}")
+        print("🎠 Iteration: ", self.iteration)
+        print("🏁 Boards: ", len(self.boards))
+        print("🗺️ Failed paths: ", self.failed_paths)
+        print("♟️ Furthest move: ", self.furthest_move)
+        print(f"⏳ Time elapsed: {self.get_elapsed_time()}")
         print("\n\n")
     
     def get_elapsed_time(self):
