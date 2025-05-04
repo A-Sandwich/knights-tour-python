@@ -6,9 +6,9 @@ class Board:
         pass
     
 
-    def seed_board_with_starting_position(self, starting_x, starting_y):
-        self.board_size = (7, 7)
-        self.cells = np.zeros((7, 7), dtype=int)
+    def seed_board_with_starting_position(self, starting_x, starting_y, board_size=8):
+        self.board_size = (board_size, board_size)
+        self.cells = np.zeros((board_size, board_size), dtype=int)
         self.cells[starting_x][starting_y] = 1
         self.last_move_number = 1
         self.last_move = (starting_x, starting_y)
@@ -93,6 +93,6 @@ class Board:
         printed_board = ""
         for column in self.cells:
             for cell in column:
-                printed_board += f"{cell:02d}|"
+                printed_board += f"{cell:04d}|"
             printed_board += "\n"
         return printed_board

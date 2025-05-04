@@ -5,9 +5,9 @@ from datetime import datetime, timedelta
 from tour.pickler import Pickler
 
 class Manager:
-    def __init__(self):
+    def __init__(self, board_size=8):
         print("init 🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕🆕")
-        self.boards = [Board().seed_board_with_starting_position(0, 0)]
+        self.boards = [Board().seed_board_with_starting_position(0, 0, board_size)]
         self.iteration = 0
         self.failed_paths = 0
         self.elapsed_time = 0
@@ -29,10 +29,10 @@ class Manager:
                 next_board = Board().seed_board(furthest_board, next_move)
                 self.boards.append(next_board)
             self.iteration += 1
-            self.elapsed_time = time() - loop_start_time
             if self.iteration % 1250000 == 0:
-                self.save()
+                #self.save()
                 self.print_state()
+            self.elapsed_time += time() - loop_start_time
         print("Final board:")
         self.print_state()
         print("DONE 🤪🤪🤪🤪🤪")
