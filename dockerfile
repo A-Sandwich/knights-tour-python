@@ -13,4 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Set the default command to run your app
 # Example if your entry point is app.py:
-CMD ["python", "main.py"]
+# https://stackoverflow.com/questions/29663459/why-doesnt-python-app-print-anything-when-run-in-a-detached-docker-container
+CMD ["python", "-u", "main.py"]

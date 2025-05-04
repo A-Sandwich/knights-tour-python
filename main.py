@@ -1,8 +1,9 @@
 from tour.manager import Manager
 from tour.pickler import Pickler
-
-print("HERE")
-manager = Pickler("tour.pickle").load()
+import os
+manager = None
+if os.path.exists("tour_progress.pickle"):
+    manager = Pickler("tour_progress.pickle").load()
 if manager is None:
     manager = Manager()
 
